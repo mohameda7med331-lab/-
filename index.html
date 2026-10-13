@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>محمد منصور (الفرعون) | تدريب شخصي وتغذية محترفة</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary:#ff5e00; --primary-hover:#e05300; --secondary:#101010; --card-bg:#1c1c1c; --text-main:#f0f0f0; --text-muted:#a0a0a0; --accent:#22c55e; --border-color:#2e2e2e; }
+    * { box-sizing:border-box; margin:0; padding:0; font-family:'Cairo',sans-serif; scroll-behavior:smooth; }
+    body { background:var(--secondary); color:var(--text-main); line-height:1.6; overflow-x:hidden; }
+
+    .navbar { display:flex; justify-content:space-between; align-items:center; padding:1rem 5%; background:rgba(16,16,16,.95); position:fixed; top:0; width:100%; z-index:1000; border-bottom:1px solid var(--border-color); backdrop-filter:blur(10px); }
+    .logo { font-size:1.5rem; font-weight:800; color:#fff; display:flex; align-items:center; gap:.5rem; }
+    .logo span { color:var(--primary); }
+    .nav-links { display:flex; list-style:none; gap:1.5rem; }
+    .nav-links a { color:var(--text-main); text-decoration:none; font-weight:600; transition:.3s; }
+    .nav-links a:hover { color:var(--primary); }
+    .btn-cta { background:var(--primary); color:#fff; padding:.6rem 1.4rem; border-radius:30px; text-decoration:none; font-weight:700; transition:.3s; border:none; cursor:pointer; display:inline-flex; align-items:center; gap:.5rem; }
+    .btn-cta:hover { background:var(--primary-hover); transform:translateY(-2px); box-shadow:0 4px 15px rgba(255,94,0,.4); }
+
+    .hero { min-height:100vh; display:flex; align-items:center; justify-content:space-between; padding:8rem 5% 4rem; background:linear-gradient(135deg,rgba(16,16,16,.9),rgba(28,28,28,.8)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop') center/cover no-repeat; }
+    .hero-content { max-width:600px; }
+    .badge { background:rgba(255,94,0,.15); color:var(--primary); padding:.4rem 1rem; border-radius:20px; font-weight:700; font-size:.9rem; border:1px solid var(--primary); display:inline-block; margin-bottom:1rem; }
+    .hero-content h1 { font-size:3rem; font-weight:900; line-height:1.2; margin-bottom:1rem; }
+    .hero-content p { color:var(--text-muted); font-size:1.1rem; margin-bottom:2rem; }
+    .stats { display:flex; gap:2rem; margin-top:2rem; }
+    .stat-item h3 { font-size:2rem; color:var(--primary); }
+    .stat-item p { color:var(--text-muted); font-size:.9rem; margin-bottom:0; }
+
+    section { padding:5rem 5%; }
+    .section-title { text-align:center; margin-bottom:3rem; }
+    .section-title h2 { font-size:2.2rem; font-weight:800; margin-bottom:.5rem; }
+    .section-title p { color:var(--text-muted); }
+
+    .cards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; }
+    .card { background:var(--card-bg); border:1px solid var(--border-color); border-radius:12px; padding:2rem; transition:.3s; }
+    .card:hover { transform:translateY(-5px); border-color:var(--primary); }
+    .card-icon { font-size:2.5rem; color:var(--primary); margin-bottom:1rem; }
+    .card h3 { font-size:1.3rem; margin-bottom:.5rem; }
+    .card p { color:var(--text-muted); font-size:.95rem; }
+
+    .calculator-container { background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:2.5rem; max-width:800px; margin:0 auto; }
+    .calc-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1.5rem; margin-top:1.5rem; }
+    .form-group { display:flex; flex-direction:column; gap:.5rem; }
+    .form-group label { font-weight:600; color:var(--text-main); }
+    .form-group input, .form-group select { background:var(--secondary); border:1px solid var(--border-color); color:#fff; padding:.8rem; border-radius:8px; font-size:1rem; outline:none; }
+    .form-group input:focus, .form-group select:focus { border-color:var(--primary); }
+    .calc-result { margin-top:2rem; padding:1.5rem; background:rgba(255,94,0,.1); border-radius:8px; border-right:4px solid var(--primary); display:none; }
+
+    .filter-buttons { display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; flex-wrap:wrap; }
+    .filter-btn { background:var(--card-bg); border:1px solid var(--border-color); color:var(--text-main); padding:.5rem 1.2rem; border-radius:20px; cursor:pointer; font-weight:600; transition:.3s; }
+    .filter-btn.active, .filter-btn:hover { background:var(--primary); border-color:var(--primary); color:#fff; }
+    .exercise-card { background:var(--card-bg); border-radius:12px; overflow:hidden; border:1px solid var(--border-color); cursor:pointer; transition:.3s; }
+    .exercise-card:hover { transform:translateY(-5px); border-color:var(--primary); }
+    .exercise-img { height:180px; background-size:cover; background-position:center; position:relative; }
+    .ai-badge { position:absolute; top:10px; left:10px; background:rgba(0,0,0,.7); color:var(--primary); padding:.2rem .6rem; border-radius:6px; font-size:.75rem; font-weight:700; border:1px solid var(--primary); display:flex; align-items:center; gap:.3rem; }
+    .exercise-info { padding:1.5rem; }
+    .exercise-tag { font-size:.8rem; color:var(--accent); font-weight:700; text-transform:uppercase; }
+
+    .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.85); backdrop-filter:blur(8px); display:none; justify-content:center; align-items:center; z-index:2000; padding:1rem; }
+    .modal-content { background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; width:100%; max-width:820px; position:relative; animation:scaleUp .3s ease; max-height:95vh; overflow-y:auto; }
+    @keyframes scaleUp { from { transform:scale(.9); opacity:0; } to { transform:scale(1); opacity:1; } }
+    .modal-header { padding:1.2rem 1.5rem; background:#161616; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-color); }
+    .close-modal { background:none; border:none; color:#fff; font-size:1.5rem; cursor:pointer; }
+    .modal-body { padding:1.5rem; }
+    .view-switchers { display:flex; gap:1rem; margin-bottom:1rem; flex-wrap:wrap; }
+    .view-btn { background:var(--secondary); border:1px solid var(--border-color); color:#fff; padding:.5rem 1rem; border-radius:8px; cursor:pointer; font-weight:600; transition:.3s; }
+    .view-btn.active { background:var(--primary); border-color:var(--primary); }
+    .video-player-screen { height:400px; border-radius:10px; position:relative; overflow:hidden; border:1px solid var(--border-color);
+      background:
+        radial-gradient(ellipse at 50% 45%, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 65%),
+        repeating-linear-gradient(45deg, #1a1a1a 0 2px, #0b0b0b 2px 4px),
+        #0b0b0b; }
+
+    .pricing-card { background:var(--card-bg); border:1px solid var(--border-color); border-radius:16px; padding:2.5rem; text-align:center; position:relative; }
+    .pricing-card.popular { border:2px solid var(--primary); }
+    .popular-badge { position:absolute; top:-15px; left:50%; transform:translateX(-50%); background:var(--primary); color:#fff; padding:.2rem 1rem; border-radius:15px; font-size:.85rem; font-weight:700; }
+    .price { font-size:2.5rem; font-weight:800; color:#fff; margin:1rem 0; }
+    .price span { font-size:1rem; color:var(--text-muted); }
+    .features-list { list-style:none; margin:1.5rem 0; text-align:right; }
+    .features-list li { margin-bottom:.8rem; color:var(--text-muted); display:flex; align-items:center; gap:.5rem; }
+    .features-list li i { color:var(--accent); }
+
+    .contact-form { max-width:600px; margin:0 auto; background:var(--card-bg); padding:2.5rem; border-radius:16px; border:1px solid var(--border-color); }
+    .contact-form textarea { background:var(--secondary); border:1px solid var(--border-color); color:#fff; padding:.8rem; border-radius:8px; font-size:1rem; resize:vertical; min-height:120px; }
+
+    footer { background:#080808; padding:3rem 5% 1rem; border-top:1px solid var(--border-color); text-align:center; }
+    .social-links { display:flex; justify-content:center; gap:1.5rem; margin-bottom:1.5rem; }
+    .social-links a { color:var(--text-main); font-size:1.5rem; transition:.3s; }
+    .social-links a:hover { color:var(--primary); }
+
+    @media (max-width:768px) {
+      .hero { flex-direction:column; text-align:center; padding-top:7rem; }
+      .stats { justify-content:center; }
+      .nav-links { display:none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="logo"><i class="fa-solid fa-dumbbell"></i> محمد منصور <span>الفرعون</span></div>
+    <ul class="nav-links">
+      <li><a href="#home">الرئيسية</a></li>
+      <li><a href="#services">الخدمات</a></li>
+      <li><a href="#calculator">حاسبة اللياقة</a></li>
+      <li><a href="#exercises">مكتبة التمارين</a></li>
+      <li><a href="#pricing">الباقات</a></li>
+    </ul>
+    <a href="#contact" class="btn-cta"><i class="fa-solid fa-calendar-check"></i> احجز استشارة</a>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <span class="badge">الكابتن محمد منصور (الفرعون) - معتمد دولياً</span>
+      <h1>غيّر جسمك وأسلوب حياتك مع برنامج تدريبي مع "الفرعون"</h1>
+      <p>احصل على تصميم حصري لبرنامجك التدريبي وجدولك الغذائي المصمم خصيصاً لهدفك وجسمك مع متابعة يومية خطوة بخطوة.</p>
+      <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+        <a href="#pricing" class="btn-cta">ابدأ رحلتك الآن</a>
+        <a href="#calculator" class="btn-cta" style="background:transparent; border:1px solid var(--border-color);">احسب سعراتك</a>
+      </div>
+      <div class="stats">
+        <div class="stat-item"><h3>+500</h3><p>متدرب أونلاين</p></div>
+        <div class="stat-item"><h3>8+</h3><p>سنوات خبرة</p></div>
+        <div class="stat-item"><h3>100%</h3><p>نتائج مضمونة</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="section-title">
+      <h2>خدمات التدريب المحترف</h2>
+      <p>خيارات متكاملة لتناسب أهدافك سواء كنت مبتدئاً أو رياضياً متقدماً</p>
+    </div>
+    <div class="cards-grid">
+      <div class="card"><i class="fa-solid fa-laptop-fitness card-icon"></i><h3>التدريب الأونلاين الشامل</h3><p>برنامج تدريبي وغذائي مرن يتم تحديثه أسبوعياً مع متابعة عبر الواتساب وتقييم مستمر للأداء.</p></div>
+      <div class="card"><i class="fa-solid fa-utensils card-icon"></i><h3>أنظمة تغذية مخصصة</h3><p>خطط غذائية مرنة تحسب الماكروز والسعرات بدقة بدون حرمان، وتعتمد على الأطعمة المفضلة لديك.</p></div>
+      <div class="card"><i class="fa-solid fa-person-running card-icon"></i><h3>إعادة التأهيل وخسارة الدهون</h3><p>برامج متخصصة لزيادة الكتلة العضلية، تحسين الجودة الحركية، والتخلص من الدهون المستعصية.</p></div>
+    </div>
+  </section>
+
+  <section id="calculator" style="background:#161616;">
+    <div class="section-title">
+      <h2>حاسبة اللياقة البدنية</h2>
+      <p>احسب احتياجك اليومي من السعرات الحرارية ومؤشر كتلة الجسم (BMI)</p>
+    </div>
+    <div class="calculator-container">
+      <div class="calc-grid">
+        <div class="form-group"><label>النوع</label><select id="gender"><option value="male">ذكر</option><option value="female">أنثى</option></select></div>
+        <div class="form-group"><label>العمر (سنة)</label><input type="number" id="age" value="25" min="10" max="100"></div>
+        <div class="form-group"><label>الوزن (كجم)</label><input type="number" id="weight" value="75" min="30"></div>
+        <div class="form-group"><label>الطول (سم)</label><input type="number" id="height" value="175" min="100"></div>
+        <div class="form-group" style="grid-column:1 / -1;">
+          <label>مستوى النشاط البدني</label>
+          <select id="activity">
+            <option value="1.2">قليل النشاط (عمل مكتبي / بدون تمارين)</option>
+            <option value="1.375">نشاط خفيف (تمارين 1-3 أيام/أسبوع)</option>
+            <option value="1.55">نشاط متوسط (تمارين 3-5 أيام/أسبوع)</option>
+            <option value="1.725">نشاط عالٍ (تمارين 6-7 أيام/أسبوع)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-cta" style="width:100%; margin-top:1.5rem; justify-content:center;" onclick="calculateFitness()">احسب الآن</button>
+      <div class="calc-result" id="calcResult">
+        <h3 style="color:var(--primary); margin-bottom:.5rem;">نتائج الحساب:</h3>
+        <p id="bmiVal"></p>
+        <p id="caloriesVal"></p>
+        <p id="adviceVal" style="margin-top:.5rem; color:var(--text-muted); font-size:.9rem;"></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="exercises">
+    <div class="section-title">
+      <h2>مكتبة التمارين مع فيديوهات 3D</h2>
+      <p>اضغط على التمرين لعرض مجسم 3D يشرح الحركة والعضلات المستهدفة (من الجانب ومن الأمام)</p>
+    </div>
+    <div class="filter-buttons">
+      <button class="filter-btn active" onclick="filterExercises('all', this)">الكل</button>
+      <button class="filter-btn" onclick="filterExercises('chest', this)">الصدر</button>
+      <button class="filter-btn" onclick="filterExercises('back', this)">الظهر</button>
+      <button class="filter-btn" onclick="filterExercises('legs', this)">الأرجل</button>
+    </div>
+    <div class="cards-grid" id="exercisesGrid">
+      <div class="exercise-card" data-category="chest" onclick="openVideoModal('تجميع الصدر المستوي (Bench Press)', '', '', 'اضبط مسكة اليدين بعرض الكتف، حافظ على ثبات الأرجل، واهبط بالبار نحو منتصف الصدر مع الشهيق ثم ادفع للأعلى.')">
+        <div class="exercise-img" style="background-image:url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=600&auto=format&fit=crop');"><span class="ai-badge"><i class="fa-solid fa-video"></i> فيديو 3D</span></div>
+        <div class="exercise-info"><span class="exercise-tag">الصدر</span><h3>تجميع الصدر المستوي (Bench Press)</h3><p>تمرين أساسي لبناء كتلة عضلة الصدر وزيادة القوة العامة.</p></div>
+      </div>
+      <div class="exercise-card" data-category="chest" onclick="openVideoModal('ضغط الصدر العلوي بالدمبل (Incline Dumbbell Press)', '', '', 'اضبط البنش بزاوية 30 إلى 45 درجة، انزل بالدمبلز ببطء لجانب أعلى الصدر ثم ادفع للأعلى مع الزفير.')">
+        <div class="exercise-img" style="background-image:url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=600&auto=format&fit=crop');"><span class="ai-badge"><i class="fa-solid fa-video"></i> فيديو 3D</span></div>
+        <div class="exercise-info"><span class="exercise-tag">الصدر</span><h3>ضغط الصدر العلوي بالدمبل (Incline Dumbbell Press)</h3><p>يستهدف الجزء العلوي من الصدر والكتف الأمامي.</p></div>
+      </div>
+      <div class="exercise-card" data-category="back" onclick="openVideoModal('السحب العالي (Lat Pulldown)', '', '', 'امسك البار بمسكة أوسع من الكتفين، افتح الصدر للأعلى، واسحب البار نحو أعلى الصدر.')">
+        <div class="exercise-img" style="background-image:url('https://images.unsplash.com/photo-1605296867304-46d5465a13f1?q=80&w=600&auto=format&fit=crop');"><span class="ai-badge"><i class="fa-solid fa-video"></i> فيديو 3D</span></div>
+        <div class="exercise-info"><span class="exercise-tag">الظهر</span><h3>السحب العالي (Lat Pulldown)</h3><p>يستهدف عضلة الظهر العريضة لتعريض الظهر وتحسين القوام.</p></div>
+      </div>
+      <div class="exercise-card" data-category="legs" onclick="openVideoModal('السكوات (Barbell Squat)', '', '', 'اجعل القدمين بعرض الكتفين، حافظ على استقامة الظهر، واهبط بالورك للخلف كأنك تجلس على كرسي.')">
+        <div class="exercise-img" style="background-image:url('https://images.unsplash.com/photo-1574680096145-d05b474e2155?q=80&w=600&auto=format&fit=crop');"><span class="ai-badge"><i class="fa-solid fa-video"></i> فيديو 3D</span></div>
+        <div class="exercise-info"><span class="exercise-tag">الأرجل</span><h3>السكوات (Barbell Squat)</h3><p>التمرين الأقوى لبناء عضلات الفخذ والأرداف وتطوير اللياقة.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal-overlay" id="videoModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle" style="color:var(--primary);">اسم التمرين</h3>
+        <button class="close-modal" onclick="closeVideoModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="view-switchers">
+          <button class="view-btn active" id="sideViewBtn" onclick="switchVideoView('side')"><i class="fa-solid fa-arrows-left-right"></i> العرض الجانبي (Side View)</button>
+          <button class="view-btn" id="frontViewBtn" onclick="switchVideoView('front')"><i class="fa-solid fa-arrows-up-down"></i> العرض الأمامي (Front View)</button>
+        </div>
+        <div class="video-player-screen" id="screen3d"></div>
+        <div style="margin-top:1.5rem; background:var(--secondary); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+          <h4 style="color:var(--accent); margin-bottom:.3rem;"><i class="fa-solid fa-circle-info"></i> نصيحة الكابتن محمد منصور:</h4>
+          <p id="coachTip" style="color:var(--text-muted); font-size:.95rem;"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="pricing" style="background:#161616;">
+    <div class="section-title">
+      <h2>باقات الاشتراك</h2>
+      <p>اختر الباقة المناسبة لأهدافك وابدأ التحول الفعلي اليوم</p>
+    </div>
+    <div class="cards-grid">
+      <div class="pricing-card">
+        <h3>الباقة الفضية</h3><p>لمدة شهر واحد</p>
+        <div class="price">50$ <span>/ شهر</span></div>
+        <ul class="features-list">
+          <li><i class="fa-solid fa-check"></i> برنامج تدريبي مخصص</li>
+          <li><i class="fa-solid fa-check"></i> نظام غذائي مرن</li>
+          <li><i class="fa-solid fa-check"></i> متابعة عبر الواتساب أسبوعياً</li>
+        </ul>
+        <a href="#contact" class="btn-cta" style="width:100%; justify-content:center;">اشترك الآن</a>
+      </div>
+      <div class="pricing-card popular">
+        <span class="popular-badge">الأكثر طلباً</span>
+        <h3>الباقة الذهبية</h3><p>لمدة 3 أشهر</p>
+        <div class="price">120$ <span>/ 3 أشهر</span></div>
+        <ul class="features-list">
+          <li><i class="fa-solid fa-check"></i> كل مميزات الباقة الفضية</li>
+          <li><i class="fa-solid fa-check"></i> تعديل النظام بمرونة متى أردت</li>
+          <li><i class="fa-solid fa-check"></i> متابعة يومية وتقييم للأداء بالفيو</li>
+          <li><i class="fa-solid fa-check"></i> كتيب مكملات ورسائل تحفيزية</li>
+        </ul>
+        <a href="#contact" class="btn-cta" style="width:100%; justify-content:center;">اشترك الآن</a>
+      </div>
+      <div class="pricing-card">
+        <h3>الباقة الماسية</h3><p>لمدة 6 أشهر</p>
+        <div class="price">220$ <span>/ 6 أشهر</span></div>
+        <ul class="features-list">
+          <li><i class="fa-solid fa-check"></i> كل مميزات الباقة الذهبية</li>
+          <li><i class="fa-solid fa-check"></i> مكالمة تقييم أسبوعية زوم/واتس</li>
+          <li><i class="fa-solid fa-check"></i> استراتيجية المحافظة على الوزن بعد الهدف</li>
+        </ul>
+        <a href="#contact" class="btn-cta" style="width:100%; justify-content:center;">اشترك الآن</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-title">
+      <h2>تواصل مع الفرعون واستلم خطتك</h2>
+      <p>سجل بياناتك وسيتم التواصل معك مباشرة لتحديد هدفك والبدء فوراً</p>
+    </div>
+    <form class="contact-form" onsubmit="handleFormSubmit(event)">
+      <div class="form-group" style="margin-bottom:1rem;"><label>الاسم بالكامل</label><input type="text" required placeholder="أدخل اسمك الكريم"></div>
+      <div class="form-group" style="margin-bottom:1rem;"><label>رقم الواتساب</label><input type="tel" required placeholder="002010XXXXXXX"></div>
+      <div class="form-group" style="margin-bottom:1rem;">
+        <label>الهدف الرئيسي</label>
+        <select><option>خسارة الدهون والتنشيف</option><option>بناء العضلات والضخامة</option><option>تحسين اللياقة والصحة العامة</option></select>
+      </div>
+      <div class="form-group" style="margin-bottom:1.5rem;"><label>رسالة أو تفاصيل إضافية</label><textarea placeholder="اكتب أي ملاحظات أو إصابات سابقة إن وجدت..."></textarea></div>
+      <button type="submit" class="btn-cta" style="width:100%; justify-content:center;">إرسال الطلب</button>
+    </form>
+  </section>
+
+  <footer>
+    <div class="social-links">
+      <a href="#"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#"><i class="fa-brands fa-facebook"></i></a>
+      <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="#"><i class="fa-brands fa-youtube"></i></a>
+    </div>
+    <p style="color:var(--text-muted); font-size:.9rem;">جميع الحقوق محفوظة © 2026 | الكابتن محمد منصور (الفرعون) - تدريب شخصي وتغذية</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    /* ===== حاسبة اللياقة ===== */
+    function calculateFitness() {
+      const gender = document.getElementById('gender').value;
+      const age = parseFloat(document.getElementById('age').value);
+      const weight = parseFloat(document.getElementById('weight').value);
+      const height = parseFloat(document.getElementById('height').value);
+      const activity = parseFloat(document.getElementById('activity').value);
+      if (!weight || !height || !age) { alert('يرجى ملء جميع البيانات بشكل صحيح'); return; }
+      const hm = height / 100, bmi = (weight / (hm * hm)).toFixed(1);
+      let bmr = (10 * weight) + (6.25 * height) - (5 * age);
+      bmr += (gender === 'male') ? 5 : -161;
+      const calories = Math.round(bmr * activity);
+      document.getElementById('bmiVal').innerText = `مؤشر كتلة الجسم (BMI): ${bmi}`;
+      document.getElementById('caloriesVal').innerText = `احتياجك اليومي للمحافظة على الوزن (TDEE): ${calories} سعرة حرارية`;
+      let advice = '';
+      if (bmi < 18.5) advice = 'نصيحة: جسمك تحت الوزن الطبيعي، يُفضل زيادتك السعرات لبناء كتلة عضلية.';
+      else if (bmi < 25) advice = 'نصيحة: وزنك في النطاق المثالي! ركز على تحسين القوة والكتلة العضلية.';
+      else advice = 'نصيحة: لديك زيادة في الوزن، يُفضل تقليل 300-500 سعرة حرارية من احتياجك لخسارة الدهون بأمان.';
+      document.getElementById('adviceVal').innerText = advice;
+      document.getElementById('calcResult').style.display = 'block';
+    }
+    function filterExercises(category, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.exercise-card').forEach(c => {
+        c.style.display = (category === 'all' || c.getAttribute('data-category') === category) ? 'block' : 'none';
+      });
+    }
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      alert('تم إرسال طلبك بنجاح! سيتم التواصل معك عبر الواتساب في أقرب وقت.');
+    }
+
+    /* ===== مجسمات التمارين 3D ===== */
+    (function () {
+      if (!window.THREE) { console.error('three.js لم يتم تحميله - تأكد من الاتصال بالإنترنت'); return; }
+      const V = (x, y, z) => new THREE.Vector3(x, y, z), UP = V(0, 1, 0), X = V(1, 0, 0);
+      const mk = (c, e, r) => new THREE.MeshStandardMaterial({ color: c, roughness: r == null ? 0.5 : r, emissive: e || 0 });
+      const CORE = mk(0xb07d62), SKINM = mk(0xd4a589, 0, 0.45), REDM = mk(0xe0222c, 0x4a0000, 0.4),
+            HAIR = mk(0x161616), SHORTM = mk(0x111111, 0, 0.7), METAL = mk(0xb8b8b8, 0, 0.25),
+            DARK = mk(0x232323, 0, 0.6), PADM = mk(0x2a2a2a, 0, 0.7), FRAME = mk(0xd8d8d8, 0, 0.4), ORANGE = mk(0xff5e00, 0, 0.5);
+      const SPH = new THREE.SphereGeometry(1, 24, 16);
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(38, 2, 0.1, 50);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setClearColor(0x000000, 0);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      scene.add(new THREE.HemisphereLight(0xffffff, 0x444444, 0.75));
+      const keyL = new THREE.DirectionalLight(0xffffff, 0.95); keyL.position.set(3, 5, 4); scene.add(keyL);
+      const rimL = new THREE.DirectionalLight(0xffb070, 0.6); rimL.position.set(-4, 3, -3); scene.add(rimL);
+      const shadow = new THREE.Mesh(new THREE.CircleGeometry(1.7, 40), new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: 0.5 }));
+      shadow.rotation.x = -Math.PI / 2; shadow.position.y = 0.002; scene.add(shadow);
+      const figure = new THREE.Group(), equip = new THREE.Group(); scene.add(figure, equip);
+
+      /* طرف متدرج: rA عند البداية و rB عند النهاية */
+      function Limb(rA, rB, m, g) {
+        g = g || figure;
+        this.cyl = new THREE.Mesh(new THREE.CylinderGeometry(rB, rA, 1, 20), m);
+        this.s1 = new THREE.Mesh(SPH, m); this.s2 = new THREE.Mesh(SPH, m);
+        this.s1.scale.setScalar(rA); this.s2.scale.setScalar(rB);
+        g.add(this.cyl, this.s1, this.s2);
+        this.set = function (a, b) {
+          const d = b.clone().sub(a), len = d.length() || 1e-4;
+          this.cyl.position.copy(a).add(b).multiplyScalar(0.5);
+          this.cyl.scale.set(1, len, 1);
+          this.cyl.quaternion.setFromUnitVectors(UP, d.divideScalar(len));
+          this.s1.position.copy(a); this.s2.position.copy(b);
+        };
+      }
+      const L = { torso: new Limb(0.115, 0.125, CORE), hips: new Limb(0.1, 0.1, SHORTM), sh: new Limb(0.07, 0.07, CORE), neck: new Limb(0.06, 0.055, CORE) };
+      [-1, 1].forEach(s => {
+        L['th' + s] = new Limb(0.08, 0.06, CORE); L['sn' + s] = new Limb(0.055, 0.04, CORE); L['ft' + s] = new Limb(0.04, 0.035, CORE);
+        L['ua' + s] = new Limb(0.055, 0.045, CORE); L['fa' + s] = new Limb(0.045, 0.032, CORE);
+      });
+      const head = new THREE.Mesh(SPH, SKINM), hair = new THREE.Mesh(SPH, HAIR), nose = new THREE.Mesh(SPH, SKINM);
+      nose.scale.setScalar(0.02); figure.add(head, hair, nose);
+
+      /* العضلات: كتل بتتلوّن أحمر لما تكون مستهدفة */
+      const blobs = [], B = {}, TQ = new THREE.Quaternion();
+      function blob(n, tag, base) { const m = new THREE.Mesh(SPH, base || SKINM); m.userData = { tag: tag, base: base || SKINM }; figure.add(m); blobs.push(m); B[n] = m; }
+      [-1, 1].forEach(s => {
+        [['pec', 'chest'], ['delt', 'delt'], ['lat', 'lat'], ['trap', 'trap'], ['glute', 'glute'], ['quad', 'quad'], ['ham', 'ham'],
+         ['calf', 'calf'], ['bi', 'arm'], ['tri', 'arm'], ['fore', 'fore'], ['hand', 'hand']].forEach(a => blob(a[0] + s, a[1]));
+        blob('short' + s, 'short', SHORTM);
+      });
+      blob('rib', 'rib'); blob('pelv', 'short', SHORTM);
+      for (let i = 0; i < 6; i++) blob('abs' + i, 'abs');
+
+      function along(m, a, b, f, r, k, off) {
+        const d = b.clone().sub(a), l = d.length() || 1e-4;
+        m.position.copy(a).lerp(b, f); if (off) m.position.add(off);
+        m.quaternion.setFromUnitVectors(UP, d.divideScalar(l)); m.scale.set(r, l * k * 0.5, r);
+      }
+      function tb(m, pos, sx, sy, sz) { m.position.copy(pos); m.quaternion.copy(TQ); m.scale.set(sx, sy, sz); }
+
+      function ik(P, T, l1, l2, hint) {
+        const d = T.clone().sub(P), D = d.length() || 1e-4, u = d.clone().divideScalar(D);
+        const Dc = Math.min(D, l1 + l2 - 0.002), a = (l1 * l1 - l2 * l2 + Dc * Dc) / (2 * Dc), h = Math.sqrt(Math.max(l1 * l1 - a * a, 0));
+        const p = hint.clone().sub(u.clone().multiplyScalar(hint.dot(u))); if (p.lengthSq() < 1e-6) p.set(0, 1, 0); p.normalize();
+        const pd = p.clone();
+        return { mid: P.clone().add(u.clone().multiplyScalar(a)).add(p.multiplyScalar(h)), end: P.clone().add(u.clone().multiplyScalar(Dc)), p: pd };
+      }
+
+      function apply(S) {
+        const P = S.pelvis, C = S.chest, up = S.up, fr = S.front, xa = new THREE.Vector3().crossVectors(up, fr);
+        TQ.setFromRotationMatrix(new THREE.Matrix4().makeBasis(xa, up, fr));
+        L.torso.set(P, C);
+        L.hips.set(P.clone().addScaledVector(X, -0.1), P.clone().addScaledVector(X, 0.1));
+        L.sh.set(C.clone().addScaledVector(X, -0.2), C.clone().addScaledVector(X, 0.2));
+        L.neck.set(C, C.clone().addScaledVector(up, 0.17));
+        const H = C.clone().addScaledVector(up, 0.3);
+        tb(head, H, 0.1, 0.125, 0.11);
+        tb(hair, H.clone().addScaledVector(up, 0.035).addScaledVector(fr, -0.03), 0.108, 0.125, 0.115);
+        nose.position.copy(H).addScaledVector(fr, 0.115).addScaledVector(up, -0.01);
+        tb(B.rib, C.clone().addScaledVector(up, -0.13), 0.2, 0.25, 0.135);
+        tb(B.pelv, P, 0.17, 0.12, 0.13);
+        for (let r = 0; r < 3; r++) for (let c = 0; c < 2; c++)
+          tb(B['abs' + (r * 2 + c)], P.clone().addScaledVector(up, 0.1 + 0.1 * r).addScaledVector(xa, (c ? 1 : -1) * 0.045).addScaledVector(fr, 0.105), 0.042, 0.045, 0.03);
+        [-1, 1].forEach(s => {
+          const hip = P.clone().addScaledVector(X, s * 0.1), sho = C.clone().addScaledVector(X, s * 0.2);
+          const leg = ik(hip, S.foot(s), 0.45, 0.45, S.knee(s)), arm = ik(sho, S.hand(s), 0.3, 0.28, S.elbow(s));
+          L['th' + s].set(hip, leg.mid); L['sn' + s].set(leg.mid, leg.end);
+          L['ft' + s].set(leg.end, leg.end.clone().add(V(0, -0.04, 0.17)));
+          L['ua' + s].set(sho, arm.mid); L['fa' + s].set(arm.mid, arm.end);
+          along(B['short' + s], hip, leg.mid, 0.25, 0.112, 0.5);
+          along(B['quad' + s], hip, leg.mid, 0.6, 0.095, 0.75, leg.p.clone().multiplyScalar(0.03));
+          along(B['ham' + s], hip, leg.mid, 0.6, 0.085, 0.7, leg.p.clone().multiplyScalar(-0.03));
+          along(B['calf' + s], leg.mid, leg.end, 0.3, 0.062, 0.55, leg.p.clone().multiplyScalar(-0.035));
+          along(B['bi' + s], sho, arm.mid, 0.55, 0.058, 0.65, arm.p.clone().multiplyScalar(-0.025));
+          along(B['tri' + s], sho, arm.mid, 0.55, 0.055, 0.7, arm.p.clone().multiplyScalar(0.028));
+          along(B['fore' + s], arm.mid, arm.end, 0.32, 0.052, 0.65);
+          B['hand' + s].position.copy(arm.end); B['hand' + s].scale.setScalar(0.055);
+          tb(B['pec' + s], C.clone().addScaledVector(X, s * 0.1).addScaledVector(fr, 0.1).addScaledVector(up, -0.08), 0.12, 0.085, 0.065);
+          tb(B['delt' + s], sho.clone().addScaledVector(up, 0.01), 0.09, 0.09, 0.09);
+          tb(B['lat' + s], C.clone().addScaledVector(X, s * 0.15).addScaledVector(fr, -0.05).addScaledVector(up, -0.2), 0.065, 0.19, 0.06);
+          tb(B['trap' + s], C.clone().addScaledVector(X, s * 0.09).addScaledVector(up, 0.07).addScaledVector(fr, -0.02), 0.1, 0.05, 0.06);
+          tb(B['glute' + s], P.clone().addScaledVector(X, s * 0.09).addScaledVector(fr, -0.09), 0.1, 0.1, 0.09);
+        });
+      }
+
+      /* ===== المعدات ===== */
+      function box(w, h, d, x, y, z, m) { const o = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m || PADM); o.position.set(x, y, z); equip.add(o); return o; }
+      function makeBar(len, plates) {
+        const g = new THREE.Group(), b = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, len, 12), METAL); b.rotation.z = Math.PI / 2; g.add(b);
+        if (plates) [-1, 1].forEach(s => [0.78, 0.84].forEach((x, i) => {
+          const p = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.05, 28), i ? ORANGE : DARK); p.rotation.z = Math.PI / 2; p.position.x = s * x; g.add(p);
+        }));
+        equip.add(g); return g;
+      }
+      function makeDB() {
+        const g = new THREE.Group(), h = new THREE.Mesh(new THREE.CylinderGeometry(0.016, 0.016, 0.2, 12), METAL); h.rotation.z = Math.PI / 2; g.add(h);
+        [-1, 1].forEach(s => { const p = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.07, 20), DARK); p.rotation.z = Math.PI / 2; p.position.x = s * 0.1; g.add(p); });
+        equip.add(g); return g;
+      }
+      let bar, cable, db;
+
+      /* ===== التمارين: w = 0 بداية الحركة ... 1 أقصى نقطة ===== */
+      const EX = {
+        squat: {
+          cam: { t: V(0, 0.9, 0), d: 3.9, el: 0.1 }, hi: ['quad', 'glute', 'ham'], lbl: 'الفخذ الأمامي والخلفي - الأرداف',
+          build() { bar = makeBar(2.0, true); },
+          pose(w) {
+            const lean = 0.08 + 0.62 * w, up = V(0, Math.cos(lean), Math.sin(lean)), fr = V(0, -Math.sin(lean), Math.cos(lean));
+            const P = V(0, 0.97 - 0.43 * w, -0.3 * w), C = P.clone().addScaledVector(up, 0.5), back = V(0, Math.sin(lean), -Math.cos(lean));
+            bar.position.copy(C).addScaledVector(up, 0.04).addScaledVector(back, 0.13);
+            apply({ pelvis: P, chest: C, up, front: fr, foot: s => V(s * 0.17, 0.08, 0), knee: s => V(s * 0.25, 0, 1),
+              hand: s => V(s * 0.55, bar.position.y, bar.position.z), elbow: s => V(s * 0.3, -1, -0.2) });
+          }
+        },
+        bench: {
+          cam: { t: V(0, 0.8, 0.3), d: 3.3, el: 0.22 }, hi: ['chest', 'delt', 'arm'], lbl: 'الصدر - الكتف الأمامي - التراي',
+          build() {
+            box(0.34, 0.1, 1.25, 0, 0.4, 0.4);
+            [-1, 1].forEach(s => { box(0.05, 0.35, 0.05, s * 0.12, 0.175, -0.05, FRAME); box(0.05, 0.35, 0.05, s * 0.12, 0.175, 0.85, FRAME); });
+            box(0.3, 0.04, 0.04, 0, 0.1, -0.05, FRAME); box(0.3, 0.04, 0.04, 0, 0.1, 0.85, FRAME);
+            bar = makeBar(2.0, true);
+          },
+          pose(w) {
+            const up = V(0, 0.04, 1).normalize(), fr = V(0, 1, -0.04).normalize(), P = V(0, 0.6, 0), C = P.clone().addScaledVector(up, 0.5);
+            const y = 1.15 - 0.35 * w; bar.position.set(0, y, C.z);
+            apply({ pelvis: P, chest: C, up, front: fr, foot: s => V(s * 0.25, 0.08, -0.45), knee: s => V(s * 0.3, 1, 0),
+              hand: s => V(s * 0.42, y, C.z), elbow: s => V(s, -0.35, 0) });
+          }
+        },
+        incline: {
+          cam: { t: V(0, 0.85, 0.05), d: 3.4, el: 0.2 }, hi: ['chest', 'delt', 'arm'], lbl: 'الصدر العلوي - الكتف - التراي',
+          build() {
+            const a = 0.87, up = V(0, Math.sin(a), -Math.cos(a)), fr = V(0, Math.cos(a), Math.sin(a));
+            box(0.34, 0.1, 0.45, 0, 0.4, 0.05);
+            const bk = box(0.34, 1.0, 0.08, 0, 0, 0);
+            bk.position.copy(V(0, 0.55, 0).addScaledVector(up, 0.45).addScaledVector(fr, -0.2)); bk.quaternion.setFromUnitVectors(UP, up);
+            [-1, 1].forEach(s => { box(0.05, 0.38, 0.05, s * 0.12, 0.19, 0.25, FRAME); box(0.05, 0.4, 0.05, s * 0.12, 0.2, -0.6, FRAME); });
+            box(0.3, 0.04, 0.04, 0, 0.1, 0.25, FRAME); box(0.3, 0.04, 0.04, 0, 0.1, -0.6, FRAME);
+            db = [makeDB(), makeDB()];
+          },
+          pose(w) {
+            const a = 0.87, up = V(0, Math.sin(a), -Math.cos(a)), fr = V(0, Math.cos(a), Math.sin(a));
+            const P = V(0, 0.55, 0), C = P.clone().addScaledVector(up, 0.5), d = 0.56 - 0.33 * w;
+            const hand = s => C.clone().addScaledVector(X, s * 0.27).addScaledVector(fr, d);
+            db[0].position.copy(hand(-1)); db[1].position.copy(hand(1));
+            apply({ pelvis: P, chest: C, up, front: fr, foot: s => V(s * 0.3, 0.08, 0.55), knee: s => V(s * 0.3, 1, 0.5),
+              hand, elbow: s => V(s, -0.5, -0.3) });
+          }
+        },
+        lat: {
+          cam: { t: V(0, 1.2, 0.2), d: 4.4, el: 0.1 }, hi: ['lat', 'trap', 'arm'], lbl: 'عضلة الظهر العريضة - الترابيس - البايسبس',
+          build() {
+            box(0.08, 2.4, 0.08, -0.8, 1.2, 0.3, FRAME); box(0.08, 2.4, 0.08, 0.8, 1.2, 0.3, FRAME); box(1.68, 0.08, 0.08, 0, 2.4, 0.3, FRAME);
+            box(0.5, 0.44, 0.5, 0, 0.22, -0.05); box(0.5, 0.07, 0.2, 0, 0.69, 0.3);
+            bar = makeBar(1.3, false); cable = new Limb(0.008, 0.008, METAL, equip);
+          },
+          pose(w) {
+            const phi = 0.12 + 0.08 * w, up = V(0, Math.cos(phi), -Math.sin(phi)), fr = V(0, Math.sin(phi), Math.cos(phi));
+            const P = V(0, 0.55, 0), C = P.clone().addScaledVector(up, 0.5), y = 1.56 - 0.64 * w, z = C.z + 0.28 - 0.08 * w;
+            bar.position.set(0, y, z); cable.set(V(0, 2.35, 0.3), bar.position);
+            apply({ pelvis: P, chest: C, up, front: fr, foot: s => V(s * 0.17, 0.08, 0.5), knee: s => V(s * 0.1, 1, 0.6),
+              hand: s => V(s * 0.5, y, z), elbow: s => V(s * 0.6, -1, -0.6) });
+          }
+        }
+      };
+
+      /* ===== العرض والتحكم ===== */
+      let cur = EX.squat, az = Math.PI / 2, azT = Math.PI / 2, running = false, drag = false, lastX = 0, mounted = false, lblEl;
+      const screen = document.getElementById('screen3d');
+      function mount() {
+        if (mounted) return;
+        screen.appendChild(renderer.domElement);
+        const c = renderer.domElement; c.style.cssText += ';display:block;width:100%;height:100%;cursor:grab;touch-action:none;';
+        const st = 'position:absolute;font-size:.78rem;background:rgba(0,0,0,.6);padding:.25rem .7rem;border-radius:6px;pointer-events:none;';
+        const tip = document.createElement('div'); tip.textContent = 'اسحب للدوران حول التمرين'; tip.style.cssText = st + 'bottom:8px;right:10px;color:#a0a0a0;'; screen.appendChild(tip);
+        lblEl = document.createElement('div'); lblEl.style.cssText = st + 'top:8px;right:10px;color:#ff5e00;font-weight:700;border:1px solid #d81e28;'; screen.appendChild(lblEl);
+        c.addEventListener('pointerdown', e => { drag = true; lastX = e.clientX; c.setPointerCapture(e.pointerId); });
+        c.addEventListener('pointermove', e => { if (!drag) return; az += (e.clientX - lastX) * 0.01; azT = az; lastX = e.clientX; });
+        ['pointerup', 'pointercancel'].forEach(n => c.addEventListener(n, () => { drag = false; }));
+        mounted = true;
+      }
+      function resize() { const w = screen.clientWidth, h = screen.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+      function load(key) {
+        while (equip.children.length) equip.remove(equip.children[0]);
+        cur = EX[key] || EX.squat; cur.build();
+        blobs.forEach(m => { m.material = cur.hi.includes(m.userData.tag) ? REDM : m.userData.base; });
+        lblEl.textContent = 'العضلات المستهدفة: ' + cur.lbl;
+      }
+      function frame() {
+        if (!running) return; requestAnimationFrame(frame);
+        const t = (performance.now() / 4000) % 1, w = Math.min(1, Math.max(0, 0.5 - 0.7 * Math.cos(2 * Math.PI * t)));
+        cur.pose(w);
+        if (!drag) az += (azT - az) * 0.08;
+        const c = cur.cam, el = c.el;
+        camera.position.set(c.t.x + Math.sin(az) * c.d * Math.cos(el), c.t.y + Math.sin(el) * c.d, c.t.z + Math.cos(az) * c.d * Math.cos(el));
+        camera.lookAt(c.t); renderer.render(scene, camera);
+      }
+
+      window.openVideoModal = function (title, a, b, tip) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('coachTip').innerText = tip;
+        document.getElementById('videoModal').style.display = 'flex';
+        const key = /incline/i.test(title) ? 'incline' : /bench/i.test(title) ? 'bench' : /squat/i.test(title) ? 'squat' : 'lat';
+        mount(); load(key); az = Math.PI / 2; window.switchVideoView('side'); resize();
+        if (!running) { running = true; frame(); }
+      };
+      window.switchVideoView = function (mode) {
+        azT = mode === 'side' ? Math.PI / 2 : 0;
+        document.getElementById('sideViewBtn').classList.toggle('active', mode === 'side');
+        document.getElementById('frontViewBtn').classList.toggle('active', mode !== 'side');
+      };
+      window.closeVideoModal = function () { running = false; document.getElementById('videoModal').style.display = 'none'; };
+      window.addEventListener('resize', () => { if (running) resize(); });
+    })();
+  </script>
+</body>
+</html>
